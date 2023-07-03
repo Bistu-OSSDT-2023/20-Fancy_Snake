@@ -26,6 +26,7 @@ class Settings():
 		self.snake1Food_color = (255, 120, 0)
 		self.speedup_food_color = (204,0,204)
 		self.speeddown_food_color = (96,96,96)
+		self.big_food_color = (0,255,0)
 		
 		# snake的移动速度
 		self.s1_speed = 1

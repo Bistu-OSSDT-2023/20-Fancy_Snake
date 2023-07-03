@@ -1,3 +1,4 @@
+from typing import List, Any
 
 import pygame
 import random
@@ -24,6 +25,7 @@ for i in range(4): # 食物的数量
 
 speedup_food = gen_food(sets)
 speeddown_food = gen_food(sets)
+big_food = gen_food(sets)
 
 # 设置帧频率
 clock = pygame.time.Clock()
@@ -34,6 +36,10 @@ sp = 1
 # 设置速度食物出现变量
 speed_food_appear = True
 cot = 0
+
+# 设置big食物出现变量
+big_food_appear = True
+cot2 = 0
 
 while sets.quit:
     # 处理帧频 锁帧
@@ -75,11 +81,78 @@ while sets.quit:
         sp = 1
         speed_food_appear = False
 
+    # 吃big食物
+    cot2 += 1
+
+    if (sets.head1.row == big_food.row and sets.head1.col == big_food.col and big_food_appear == True):
+        big_food_appear = False
+        s1increase_array = [sets.snake1[len(sets.snake1) - 3], sets.snake1[len(sets.snake1) - 2],
+                            sets.snake1[len(sets.snake1) - 1]]
+        sets.snake1.extend(s1increase_array)  # 长度加3
+
+    if(sets.head1.row == big_food.row-1 and sets.head1.col == big_food.col and big_food_appear == True):
+        big_food_appear = False
+        s1increase_array = [sets.snake1[len(sets.snake1)-3],sets.snake1[len(sets.snake1)-2],sets.snake1[len(sets.snake1)-1]]
+        sets.snake1.extend(s1increase_array)  # 长度加3
+
+    if (sets.head1.row == big_food.row +1 and sets.head1.col == big_food.col and big_food_appear == True):
+        big_food_appear = False
+        s1increase_array = [sets.snake1[len(sets.snake1) - 3], sets.snake1[len(sets.snake1) - 2],
+                                sets.snake1[len(sets.snake1) - 1]]
+        sets.snake1.extend(s1increase_array)  # 长度加3
+
+    if (sets.head1.row == big_food.row  and sets.head1.col == big_food.col-1 and big_food_appear == True):
+        big_food_appear = False
+        s1increase_array = [sets.snake1[len(sets.snake1) - 3], sets.snake1[len(sets.snake1) - 2],
+                            sets.snake1[len(sets.snake1) - 1]]
+        sets.snake1.extend(s1increase_array)  # 长度加3
+
+    if (sets.head1.row == big_food.row  and sets.head1.col == big_food.col+1 and big_food_appear == True):
+        big_food_appear = False
+        s1increase_array = [sets.snake1[len(sets.snake1) - 3], sets.snake1[len(sets.snake1) - 2],
+                                sets.snake1[len(sets.snake1) - 1]]
+        sets.snake1.extend(s1increase_array)  # 长度加3
+
+    if (sets.head2.row == big_food.row and sets.head2.col == big_food.col and big_food_appear == True):
+        big_food_appear = False
+        s2increase_array = [sets.snake2[len(sets.snake1) - 3], sets.snake2[len(sets.snake2) - 2],sets.snake2[len(sets.snake2) - 1]]
+        sets.snake2.extend(s2increase_array)
+
+    if (sets.head2.row == big_food.row-1 and sets.head2.col == big_food.col and big_food_appear == True):
+        big_food_appear = False
+        s2increase_array = [sets.snake2[len(sets.snake1) - 3], sets.snake2[len(sets.snake2) - 2],
+                                sets.snake2[len(sets.snake2) - 1]]
+        sets.snake2.extend(s2increase_array)
+
+    if (sets.head2.row == big_food.row +1 and sets.head2.col == big_food.col and big_food_appear == True):
+        big_food_appear = False
+        s2increase_array = [sets.snake2[len(sets.snake1) - 3], sets.snake2[len(sets.snake2) - 2],
+                                    sets.snake2[len(sets.snake2) - 1]]
+        sets.snake2.extend(s2increase_array)
+
+    if (sets.head2.row == big_food.row and sets.head2.col == big_food.col-1 and big_food_appear == True):
+        big_food_appear = False
+        s2increase_array = [sets.snake2[len(sets.snake1) - 3], sets.snake2[len(sets.snake2) - 2],
+                        sets.snake2[len(sets.snake2) - 1]]
+        sets.snake2.extend(s2increase_array)
+
+    if (sets.head2.row == big_food.row and sets.head2.col == big_food.col+1 and big_food_appear == True):
+        big_food_appear = False
+        s2increase_array = [sets.snake2[len(sets.snake1) - 3], sets.snake2[len(sets.snake2) - 2],
+                                sets.snake2[len(sets.snake2) - 1]]
+        sets.snake2.extend(s2increase_array)
+
+
     # 使速度食物每隔一定时间刷新一次
     if (cot%300 == 0):
         speedup_food = gen_food(sets)
         speeddown_food = gen_food(sets)
         speed_food_appear = True
+
+    # 使big食物每隔一定时间刷新一次
+    if (cot2%400 == 0):
+        big_food = gen_food(sets)
+        big_food_appear = True
 
     # 处理蛇的身子    # 1.把原来的头插入到sets.snake1的头上    # 2.把最后一个sets.snake1删掉
 
@@ -184,6 +257,14 @@ while sets.quit:
     if(speed_food_appear):
         rects(window, sets, speedup_food, sets.speedup_food_color)
         rects(window, sets, speeddown_food, sets.speeddown_food_color)
+
+    # 绘制big食物
+    if(big_food_appear):
+        rects(window, sets, big_food, sets.big_food_color)
+        rects(window, sets, Point(big_food.row - 1, big_food.col), sets.big_food_color)
+        rects(window, sets, Point(big_food.row, big_food.col - 1), sets.big_food_color)
+        rects(window, sets, Point(big_food.row + 1, big_food.col), sets.big_food_color)
+        rects(window, sets, Point(big_food.row, big_food.col + 1), sets.big_food_color)
 
     # 绘制蛇的身子
     for body1 in sets.snake1:
