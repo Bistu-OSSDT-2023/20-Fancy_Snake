@@ -1,0 +1,6 @@
+环境部署：
+本项目测试时的运行环境为：Windows + Python 3.9.13
+需要保证已配置好正确的python环境，并已将pip的版本更新到最新。在环境的部署与配置中，需要注意以下几点内容：
+1.利用pip指令配置好源代码中import的python库（具体操作：pip install + 库名），并注意以下几个库的版本要求：
+2.确保项目有正确的科大讯飞语音听写AI模型的WebAPI接口密钥。语音听写流式 WebAPI 接口调用示例 接口文档：https://doc.xfyun.cn/rest_api/语音听写（流式版）.html
+3.更改项目源代码中的APPID、APIKey、APISecret并保证可用。
